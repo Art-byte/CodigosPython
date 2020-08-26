@@ -1,0 +1,115 @@
+db.createUser(
+{
+    user:"art",
+     pwd:"123",
+     roles:["readWrite","dbAdmin"]
+     }
+)   
+
+
+db.clientes.insert(
+{
+    firstname:"Arturo",
+    lastName:"Pedraza"
+}
+)
+
+
+db.customers.insert([
+    {firstname:"Jose",
+    lastName:"Pedraza"},
+
+    {firstname:"Fernanda",
+    lastName:"Pedraza"},
+
+    {firstname:"Frida",
+    lastName:"Pedraza"}
+])
+
+
+db.customers.update(
+    {firstname:"Frida"},
+    {
+        $set:{age:45}
+    }
+)
+
+
+
+#$set nos permite agregar campos
+#$unset nos permite quitar los campos
+#$inc nos permite hacer incrementos
+
+
+
+// con esta sentencia, se evalua si existe un campo
+si no hay coinsidencia lo crea, de lo contrario lo agrega o actualiza de acuerdo a la busqueda
+
+db.customers.update(
+{
+    firstname:"Fernanda"
+},
+{
+    firstname:"Maria Fernanda"
+    lastName:"Pedraza Bonilla"
+},
+{
+    upsert:true
+}
+)
+
+
+db.customers.update(
+{
+   _id:ObjectId("5f2c1440e7db9e35ccfcc584")
+},
+{
+    $rename:{"firstname" : "PrimerNombre"}
+}
+)
+
+
+
+
+db.customers.insert([
+    {name:"Karla", age:20},
+    {name:"Moises", age:30},
+    {name:"Daniel", age:45}
+])
+
+
+#Para obtener a los que son mayores a 30
+db.customers.find({age:{$gt:30}}).pretty()
+
+
+#para obtener los menores a 30 
+
+db.customers.find({age:{$lt:30}}).pretty()
+
+
+#obtener mayores a 30 y menores a 81
+db.customers.find({age:{$gt:10, $lt:81}}).pretty()
+
+#ordenr de manera ascendente 1 descendente -1
+db.customers.find().sort({lastName:1})
+
+Limit es para limitar como su nombre lo dice el numero de resultados
+
+
+FOR EACH
+db.customers.find().forEach(
+function(doc){
+    print(doc.name)
+}
+)
+
+
+
+
+
+
+
+
+
+
+
